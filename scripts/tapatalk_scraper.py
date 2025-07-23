@@ -8,6 +8,7 @@ import sys
 import time
 import base64
 import xmlrpc.client
+import requests
 from datetime import datetime
 from pathlib import Path
 import xml.etree.ElementTree as ET
@@ -21,17 +22,39 @@ class TapatalkTransport(xmlrpc.client.Transport):
     def __init__(self, use_datetime=False, use_builtin_types=False):
         super().__init__(use_datetime, use_builtin_types)
         self._use_builtin_types = use_builtin_types
+        self.session = requests.Session()
+        self.session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15',
+            'Accept': 'text/xml',
+            'Content-Type': 'text/xml'
+        })
     
-    def parse_response(self, response):
-        """Parse response while handling Tapatalk's encoding"""
-        p, u = self.getparser()
-        while True:
-            data = response.read(1024)
-            if not data:
-                break
-            p.feed(data)
-        p.close()
-        return u.close()
+    def request(self, host, handler, request_body, verbose=False):
+        """Make request using requests library to handle redirects"""
+        url = f"https://{host}{handler}"
+        
+        try:
+            response = self.session.post(
+                url, 
+                data=request_body,
+                allow_redirects=True,
+                timeout=30
+            )
+            response.raise_for_status()
+            
+            # Parse the XML response
+            p, u = self.getparser()
+            p.feed(response.text)
+            p.close()
+            return u.close()
+            
+        except Exception as e:
+            raise xmlrpc.client.ProtocolError(
+                host + handler,
+                500,
+                str(e),
+                {}
+            )
 
 class TapatalkScraper:
     def __init__(self):
