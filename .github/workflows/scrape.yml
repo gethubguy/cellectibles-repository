@@ -74,9 +74,10 @@ jobs:
         MAX_RETRIES: 3
         TIMEOUT_SECONDS: 30
       run: |
+        chmod +x scripts/scraper_with_commits.sh
         if [ "${{ github.event.inputs.scraper_type }}" = "tapatalk" ]; then
-          echo "Using Tapatalk API scraper..."
-          python scripts/tapatalk_scraper.py --forum ${{ github.event.inputs.forum_id }} --topic-limit ${{ github.event.inputs.thread_limit }}
+          echo "Using Tapatalk API scraper with periodic commits..."
+          ./scripts/scraper_with_commits.sh --forum ${{ github.event.inputs.forum_id }} --topic-limit ${{ github.event.inputs.thread_limit }}
         else
           echo "Using HTML scraper..."
           python scripts/scraper.py --forum ${{ github.event.inputs.forum_id }} --thread-limit ${{ github.event.inputs.thread_limit }}
