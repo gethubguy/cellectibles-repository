@@ -71,11 +71,14 @@ class TapatalkScraper:
         
     def decode_base64_field(self, value):
         """Decode base64 encoded fields from Tapatalk"""
-        if isinstance(value, dict) and 'base64' in str(value):
+        if isinstance(value, xmlrpc.client.Binary):
+            # Handle XML-RPC Binary objects
+            return value.data.decode('utf-8', errors='ignore')
+        elif isinstance(value, dict) and 'base64' in str(value):
             # Handle base64 encoded values
             return base64.b64decode(value).decode('utf-8', errors='ignore')
         elif isinstance(value, bytes):
-            return base64.b64decode(value).decode('utf-8', errors='ignore')
+            return value.decode('utf-8', errors='ignore')
         return value
     
     def parse_topic_list(self, response):
@@ -218,7 +221,10 @@ class TapatalkScraper:
         
         # Process each topic
         for i, topic in enumerate(all_topics):
-            logger.info(f"Processing topic {i+1}/{len(all_topics)}: {topic['topic_title'][:50]}...")
+            topic_title = topic.get('topic_title', 'Unknown')
+            if len(topic_title) > 50:
+                topic_title = topic_title[:50] + "..."
+            logger.info(f"Processing topic {i+1}/{len(all_topics)}: {topic_title}")
             
             # Save thread metadata
             thread_data = {
