@@ -126,8 +126,8 @@ class TapatalkScraper:
                 'post_title': self.decode_base64_field(post.get('post_title', '')),
                 'post_author_name': self.decode_base64_field(post.get('post_author_name', '')),
                 'post_content': self.decode_base64_field(post.get('post_content', '')),
-                'post_time': post.get('post_time', ''),
-                'timestamp': post.get('timestamp', '')
+                'post_time': str(post.get('post_time', '')) if post.get('post_time') else '',
+                'timestamp': str(post.get('timestamp', '')) if post.get('timestamp') else ''
             }
             posts.append(parsed_post)
         
