@@ -99,8 +99,8 @@ class TapatalkScraper:
                 'forum_id': str(topic.get('forum_id', '')),
                 'topic_title': self.decode_base64_field(topic.get('topic_title', '')),
                 'topic_author_name': self.decode_base64_field(topic.get('topic_author_name', '')),
-                'reply_number': topic.get('reply_number', 0),
-                'view_number': topic.get('view_number', 0),
+                'reply_number': int(topic.get('reply_number', 0)) if topic.get('reply_number') else 0,
+                'view_number': int(topic.get('view_number', 0)) if topic.get('view_number') else 0,
                 'post_time': topic.get('post_time', ''),
                 'last_reply_time': topic.get('last_reply_time', '')
             }
@@ -228,14 +228,14 @@ class TapatalkScraper:
             
             # Save thread metadata
             thread_data = {
-                'id': topic['topic_id'],
-                'forum_id': forum_id,
+                'id': str(topic['topic_id']),
+                'forum_id': str(forum_id),
                 'title': topic['topic_title'],
                 'author': topic['topic_author_name'],
                 'reply_count': topic['reply_number'],
                 'view_count': topic['view_number'],
-                'created_date': topic['post_time'],
-                'last_reply': topic['last_reply_time']
+                'created_date': str(topic['post_time']) if topic['post_time'] else None,
+                'last_reply': str(topic['last_reply_time']) if topic['last_reply_time'] else None
             }
             self.storage.save_thread(thread_data)
             
