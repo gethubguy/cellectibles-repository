@@ -1,0 +1,98 @@
+name: Scrape Net54 Forum
+
+on:
+  workflow_dispatch:
+    inputs:
+      forum_id:
+        description: 'Specific forum ID to scrape (leave empty for all)'
+        required: false
+        type: string
+      thread_limit:
+        description: 'Maximum threads per forum to scrape'
+        required: false
+        type: string
+        default: '100'
+  
+  schedule:
+    # Run weekly on Sundays at 2 AM UTC
+    - cron: '0 2 * * 0'
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360  # 6 hours max
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Cache Python dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Create directories
+      run: |
+        mkdir -p data/{raw,processed/{forums,threads,posts},metadata}
+        mkdir -p logs
+    
+    - name: Download previous data artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: scraped-data
+        path: data/
+      continue-on-error: true
+    
+    - name: Run scraper
+      env:
+        BASE_URL: https://www.net54baseball.com
+        DELAY_SECONDS: 2
+        MAX_RETRIES: 3
+        TIMEOUT_SECONDS: 30
+      run: |
+        if [ -n "${{ github.event.inputs.forum_id }}" ]; then
+          python scripts/scraper.py --forum ${{ github.event.inputs.forum_id }} --thread-limit ${{ github.event.inputs.thread_limit }}
+        else
+          python scripts/scraper.py --thread-limit ${{ github.event.inputs.thread_limit }}
+        fi
+    
+    - name: Show scraping stats
+      if: always()
+      run: |
+        python scripts/scraper.py --stats
+    
+    - name: Upload scraped data
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: scraped-data
+        path: data/
+        retention-days: 90
+    
+    - name: Upload logs
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: scraping-logs
+        path: logs/
+        retention-days: 30
+    
+    - name: Create summary
+      if: always()
+      run: |
+        echo "## Scraping Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        python scripts/scraper.py --stats >> $GITHUB_STEP_SUMMARY
