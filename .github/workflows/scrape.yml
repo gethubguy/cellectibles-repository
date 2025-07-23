@@ -3,15 +3,24 @@ name: Scrape Net54 Forum
 on:
   workflow_dispatch:
     inputs:
+      scraper_type:
+        description: 'Scraper type to use'
+        required: true
+        type: choice
+        options:
+          - tapatalk
+          - html
+        default: tapatalk
       forum_id:
-        description: 'Specific forum ID to scrape (leave empty for all)'
-        required: false
+        description: 'Specific forum ID to scrape'
+        required: true
         type: string
+        default: '39'
       thread_limit:
-        description: 'Maximum threads per forum to scrape'
+        description: 'Maximum threads to scrape'
         required: false
         type: string
-        default: '100'
+        default: '10'
   
   schedule:
     # Run weekly on Sundays at 2 AM UTC
@@ -59,14 +68,16 @@ jobs:
     - name: Run scraper
       env:
         BASE_URL: https://www.net54baseball.com
-        DELAY_SECONDS: 2
+        DELAY_SECONDS: 5
         MAX_RETRIES: 3
         TIMEOUT_SECONDS: 30
       run: |
-        if [ -n "${{ github.event.inputs.forum_id }}" ]; then
-          python scripts/scraper.py --forum ${{ github.event.inputs.forum_id }} --thread-limit ${{ github.event.inputs.thread_limit }}
+        if [ "${{ github.event.inputs.scraper_type }}" = "tapatalk" ]; then
+          echo "Using Tapatalk API scraper..."
+          python scripts/tapatalk_scraper.py --forum ${{ github.event.inputs.forum_id }} --topic-limit ${{ github.event.inputs.thread_limit }}
         else
-          python scripts/scraper.py --thread-limit ${{ github.event.inputs.thread_limit }}
+          echo "Using HTML scraper..."
+          python scripts/scraper.py --forum ${{ github.event.inputs.forum_id }} --thread-limit ${{ github.event.inputs.thread_limit }}
         fi
     
     - name: Show scraping stats
@@ -74,13 +85,23 @@ jobs:
       run: |
         python scripts/scraper.py --stats
     
-    - name: Upload scraped data
+    - name: Commit scraped data
+      if: success()
+      run: |
+        git config --global user.name 'GitHub Action'
+        git config --global user.email 'action@github.com'
+        git add data/processed/
+        git add data/metadata/
+        git diff --staged --quiet || git commit -m "Add scraped data from forum ${{ github.event.inputs.forum_id }} [skip ci]"
+        git push || echo "No new data to push"
+    
+    - name: Upload scraped data artifact
       uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: scraped-data
+        name: scraped-data-backup
         path: data/
-        retention-days: 90
+        retention-days: 30
     
     - name: Upload logs
       uses: actions/upload-artifact@v3

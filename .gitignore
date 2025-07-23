@@ -8,9 +8,12 @@ venv/
 env/
 ENV/
 
-# Data and logs (too large for git)
-data/
+# Logs only (data will be committed)
 logs/
+
+# Keep raw data out of git
+data/raw/
+data/sample/
 
 # Environment
 .env
