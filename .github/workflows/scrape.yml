@@ -89,7 +89,7 @@ jobs:
         python scripts/scraper.py --stats
     
     - name: Commit scraped data
-      if: success()
+      if: always()
       run: |
         git config --global user.name 'GitHub Action'
         git config --global user.email 'action@github.com'
