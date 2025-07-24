@@ -24,7 +24,11 @@ if USE_NEW_STRUCTURE:
     
     if args.stats:
         # Show statistics using legacy storage
-        scraper.legacy_scraper.storage.show_stats()
+        stats = scraper.legacy_scraper.storage.get_stats()
+        print(f"\nScraping Statistics:")
+        print(f"Forums scraped: {stats['forums_scraped']}")
+        print(f"Threads scraped: {stats['threads_scraped']}")
+        print(f"Last update: {stats['last_update']}")
     else:
         # Run scraping
         try:
