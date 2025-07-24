@@ -42,7 +42,8 @@
       "Bash(unlink:*)",
       "Bash(ln:*)",
       "Bash(sudo mv:*)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "Bash(diff:*)"
     ],
     "deny": []
   }

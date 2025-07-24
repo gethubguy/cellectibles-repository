@@ -57,14 +57,14 @@ jobs:
     
     - name: Create directories
       run: |
-        mkdir -p data/{raw,processed/{forums,threads,posts},metadata}
+        mkdir -p data/forums/net54/{raw,processed/{forums,threads,posts},metadata}
         mkdir -p logs
     
     - name: Download previous data artifact
       uses: actions/download-artifact@v4
       with:
         name: scraped-data
-        path: data/
+        path: data/forums/net54/
       continue-on-error: true
     
     - name: Run scraper
@@ -106,8 +106,8 @@ jobs:
       run: |
         git config --global user.name 'GitHub Action'
         git config --global user.email 'action@github.com'
-        git add data/processed/
-        git add data/metadata/
+        git add data/forums/net54/processed/
+        git add data/forums/net54/metadata/
         git diff --staged --quiet || git commit -m "Add scraped data from forum ${{ github.event.inputs.forum_id }} [skip ci]"
         git push || echo "No new data to push"
     
@@ -116,7 +116,7 @@ jobs:
       if: always()
       with:
         name: scraped-data-backup
-        path: data/
+        path: data/forums/net54/
         retention-days: 30
     
     - name: Upload logs

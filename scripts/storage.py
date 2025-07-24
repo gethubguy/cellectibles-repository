@@ -7,7 +7,7 @@ from utils import setup_logging, get_safe_filename
 logger = setup_logging('storage')
 
 class DataStorage:
-    def __init__(self, base_dir='./data'):
+    def __init__(self, base_dir='./data/forums/net54'):
         self.base_dir = Path(base_dir)
         self.processed_dir = self.base_dir / 'processed'
         self.metadata_dir = self.base_dir / 'metadata'
