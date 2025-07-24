@@ -36,7 +36,13 @@
       "WebFetch(domain:www.brockelmanauctions.com)",
       "WebFetch(domain:www.oldcardboard.com)",
       "WebFetch(domain:prewarcards.com)",
-      "Bash(USE_NEW_SCRAPERS=false python3 scripts/scraper_wrapper.py --stats)"
+      "Bash(USE_NEW_SCRAPERS=false python3 scripts/scraper_wrapper.py --stats)",
+      "Bash(tree:*)",
+      "Bash(mv:*)",
+      "Bash(unlink:*)",
+      "Bash(ln:*)",
+      "Bash(sudo mv:*)",
+      "Bash(cp:*)"
     ],
     "deny": []
   }
