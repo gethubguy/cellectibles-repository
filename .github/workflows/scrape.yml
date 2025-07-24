@@ -88,6 +88,19 @@ jobs:
       run: |
         python scripts/scraper.py --stats
     
+    - name: Check scraper exit status
+      if: always()
+      run: |
+        if [ -f scraper_exit_code.txt ]; then
+          EXIT_CODE=$(cat scraper_exit_code.txt)
+          echo "Scraper exit code: $EXIT_CODE"
+          if [ "$EXIT_CODE" != "0" ]; then
+            echo "::warning::Scraper exited with error code $EXIT_CODE but data was preserved"
+          fi
+        else
+          echo "::warning::Could not find scraper exit code file"
+        fi
+    
     - name: Commit scraped data
       if: always()
       run: |

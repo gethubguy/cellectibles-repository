@@ -55,4 +55,9 @@ wait $SCRAPER_PID
 SCRAPER_EXIT_CODE=$?
 
 echo "=== Scraper finished with exit code $SCRAPER_EXIT_CODE ==="
-exit $SCRAPER_EXIT_CODE
+
+# Save exit code to file for workflow to check
+echo $SCRAPER_EXIT_CODE > scraper_exit_code.txt
+
+# Always exit 0 to allow commits, but preserve actual exit code in file
+exit 0
