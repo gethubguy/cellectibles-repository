@@ -5,6 +5,7 @@ lxml==5.1.0
 
 # Environment and configuration
 python-dotenv==1.0.1
+PyYAML==6.0.1
 
 # Data handling
 pandas==2.2.0

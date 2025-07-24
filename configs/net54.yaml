@@ -1,0 +1,28 @@
+archive:
+  name: net54
+  type: forum
+  base_url: https://www.net54baseball.com
+  
+scraping:
+  delay_seconds: 5
+  max_retries: 3
+  timeout_seconds: 30
+  
+storage:
+  base_path: archives/forums/net54
+  structure:
+    forums: processed/forums
+    threads: processed/threads
+    posts: processed/posts
+    
+features:
+  use_tapatalk: true
+  respect_robots_txt: true
+  
+logging:
+  level: INFO
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  
+progress:
+  checkpoint_frequency: 100  # Save progress every N items
+  resume_enabled: true

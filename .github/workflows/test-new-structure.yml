@@ -1,0 +1,71 @@
+name: Test New Structure
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: 'Type of test to run'
+        required: true
+        default: 'stats'
+        type: choice
+        options:
+          - stats
+          - scrape-small
+          - compare-structures
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Test old structure (baseline)
+      if: github.event.inputs.test_type != 'stats'
+      env:
+        USE_NEW_SCRAPERS: false
+      run: |
+        echo "=== Testing with old structure ==="
+        python scripts/scraper_wrapper.py --stats
+        
+    - name: Test new structure
+      env:
+        USE_NEW_SCRAPERS: true
+      run: |
+        echo "=== Testing with new structure ==="
+        if [ "${{ github.event.inputs.test_type }}" = "stats" ]; then
+          python scripts/scraper_wrapper.py --stats
+        elif [ "${{ github.event.inputs.test_type }}" = "scrape-small" ]; then
+          # Test with a small scrape (1 thread limit)
+          python scripts/scraper_wrapper.py --forum 3 --thread-limit 1
+        fi
+        
+    - name: Compare directory structures
+      if: github.event.inputs.test_type == 'compare-structures'
+      run: |
+        echo "=== Old structure ==="
+        ls -la data/ || echo "No data directory"
+        
+        echo -e "\n=== New structure ==="
+        ls -la archives/forums/net54/ || echo "No new archive directory"
+        
+        echo -e "\n=== Full new structure ==="
+        find archives/ -type d -name "processed" | head -20
+        
+    - name: Check imports and modules
+      run: |
+        echo "=== Checking if new modules can be imported ==="
+        python -c "from tools.scrapers.base import BaseScraper; print('✓ BaseScraper imported successfully')"
+        python -c "from tools.scrapers.forums import Net54Scraper; print('✓ Net54Scraper imported successfully')"
+        python -c "import yaml; print('✓ PyYAML imported successfully')"

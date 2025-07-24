@@ -1,0 +1,35 @@
+archive:
+  name: prewarcards
+  type: content
+  base_url: https://prewarcards.com
+  
+scraping:
+  delay_seconds: 5
+  max_retries: 2
+  timeout_seconds: 30
+  
+storage:
+  base_path: archives/content/prewarcards
+  structure:
+    articles: processed/articles
+    galleries: processed/galleries
+    resources: processed/resources
+    
+features:
+  download_images: true  # Important for card galleries
+  parse_metadata: true
+  extract_card_info: true
+  
+content_types:
+  - articles
+  - card-galleries
+  - price-guides
+  - historical-resources
+  
+image_settings:
+  max_size_mb: 10
+  formats: ['jpg', 'jpeg', 'png', 'webp']
+  
+logging:
+  level: INFO
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'

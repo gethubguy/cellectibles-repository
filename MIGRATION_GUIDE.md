@@ -6,9 +6,9 @@ This guide walks through transforming the Net54 scraper into the comprehensive `
 ## Pre-Migration Checklist
 
 ### 1. Wait for Current Scraping to Complete
-- [ ] Current GitHub Actions run has finished
-- [ ] No uncommitted data in the repository
-- [ ] Latest data has been pushed to GitHub
+- [x] Current GitHub Actions run has finished
+- [x] No uncommitted data in the repository
+- [x] Latest data has been pushed to GitHub
 
 ### 2. Backup Current Data
 ```bash

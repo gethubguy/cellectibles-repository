@@ -1,0 +1,34 @@
+archive:
+  name: psa
+  type: forum
+  base_url: https://forums.collectors.com
+  
+scraping:
+  delay_seconds: 3  # Forums typically allow faster access
+  max_retries: 3
+  timeout_seconds: 30
+  
+storage:
+  base_path: archives/forums/psa
+  structure:
+    forums: processed/forums
+    threads: processed/threads
+    posts: processed/posts
+    
+features:
+  use_api: false  # No known API
+  respect_robots_txt: true
+  track_user_stats: true
+  
+forums_to_scrape:
+  - vintage-cards
+  - grading-authentication
+  - set-registry
+  
+logging:
+  level: INFO
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  
+progress:
+  checkpoint_frequency: 50
+  resume_enabled: true

@@ -1,6 +1,14 @@
-# Net54 Baseball Forum Archive
+# Net54 Baseball Forum Archive → Collectibles Archive (Migration in Progress)
 
-This project archives the Net54 Baseball forum (https://www.net54baseball.com/) for historical preservation and future AI analysis.
+This project started as a Net54 Baseball forum archiver and is expanding to become a comprehensive collectibles data archive, including forums, auction houses, and content sites.
+
+## 🚀 Migration Status
+
+We're currently migrating to a new structure that supports multiple data sources. The existing Net54 scraper continues to work normally during this transition.
+
+- **Current**: Net54 forum scraping (fully operational)
+- **Coming Soon**: Heritage Auctions, PSA Forums, PrewarCards, and more
+- **Migration Guide**: See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for details
 
 ## Quick Start
 
@@ -56,3 +64,46 @@ Scraped data is organized as:
 - Progress tracking to avoid re-scraping
 - Structured JSON output for easy analysis
 - Comprehensive logging
+
+## New Collectibles CLI (Beta)
+
+A unified CLI for managing multiple archives is now available:
+
+```bash
+# List all configured archives
+python collectibles.py list
+
+# Scrape specific archives
+python collectibles.py scrape net54 --forum 39
+python collectibles.py scrape heritage  # Coming soon
+
+# View statistics
+python collectibles.py stats
+
+# Verify setup
+python collectibles.py verify
+```
+
+## Testing the Migration
+
+Before migrating, test the new structure:
+
+```bash
+# Run local tests
+python scripts/test_migration_local.py
+
+# Test with new structure (non-destructive)
+USE_NEW_SCRAPERS=true python scripts/scraper_wrapper.py --stats
+
+# Dry run data migration
+python scripts/migrate_data.py --dry-run
+```
+
+See [TESTING_GUIDE.md](TESTING_GUIDE.md) for comprehensive testing instructions.
+
+## Documentation
+
+- [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) - Full migration plan and timeline
+- [TESTING_GUIDE.md](TESTING_GUIDE.md) - How to test the new structure
+- [MIGRATION_CHECKLIST.md](MIGRATION_CHECKLIST.md) - Step-by-step migration checklist
+- [MIGRATION_PROGRESS.md](MIGRATION_PROGRESS.md) - Current migration status

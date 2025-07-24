@@ -1,0 +1,33 @@
+archive:
+  name: heritage
+  type: auction
+  base_url: https://www.ha.com
+  
+scraping:
+  delay_seconds: 15  # More conservative for auction house
+  max_retries: 3
+  timeout_seconds: 60
+  respect_robots_txt: true
+  
+storage:
+  base_path: archives/auctions/heritage
+  structure:
+    lots: processed/lots
+    auctions: processed/auctions
+    categories: processed/categories
+    
+features:
+  download_images: false  # Set to true to download lot images
+  track_prices: true
+  save_raw_html: true
+  
+authentication:
+  required: false  # Some features may require login
+  
+categories:
+  - sports-collectibles/trading-cards
+  - sports-collectibles/memorabilia
+  
+logging:
+  level: INFO
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'

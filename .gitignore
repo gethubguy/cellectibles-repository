@@ -15,6 +15,18 @@ logs/
 data/raw/
 data/sample/
 
+# New structure - raw data
+archives/*/*/data/raw/
+
+# Backups (too large for git)
+backups/
+
+# Migration temporary files
+migration.log
+rollback_*.log
+validation_report_*.json
+scraper_exit_code.txt
+
 # Environment
 .env
 

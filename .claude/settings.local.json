@@ -35,7 +35,8 @@
       "WebFetch(domain:robertedwardauctions.com)",
       "WebFetch(domain:www.brockelmanauctions.com)",
       "WebFetch(domain:www.oldcardboard.com)",
-      "WebFetch(domain:prewarcards.com)"
+      "WebFetch(domain:prewarcards.com)",
+      "Bash(USE_NEW_SCRAPERS=false python3 scripts/scraper_wrapper.py --stats)"
     ],
     "deny": []
   }
