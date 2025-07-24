@@ -41,7 +41,7 @@ class Net54Scraper(BaseScraper):
         
         # Run legacy scraper
         if forum_id:
-            return self.legacy_scraper.scrape_forum(forum_id, thread_limit)
+            return self.legacy_scraper.scrape_forum_threads(forum_id, thread_limit)
         else:
             return self.legacy_scraper.scrape_entire_forum(thread_limit)
     
