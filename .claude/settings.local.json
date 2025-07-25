@@ -43,7 +43,8 @@
       "Bash(ln:*)",
       "Bash(sudo mv:*)",
       "Bash(cp:*)",
-      "Bash(diff:*)"
+      "Bash(diff:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }
