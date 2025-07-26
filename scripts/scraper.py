@@ -64,10 +64,14 @@ class Net54Scraper:
                 else:
                     logger.debug(f"Thread {thread['id']} already scraped, skipping...")
             
-            # If we found no new threads on this page, we're done
-            if not new_threads and threads:
-                logger.info(f"No new threads found on page {page_count}, stopping...")
+            # If this page had no threads at all, we're done
+            if not threads:
+                logger.info(f"No threads found on page {page_count}, reached end of forum")
                 break
+                
+            # If we found some new threads on this page, continue
+            if new_threads:
+                logger.info(f"Found {len(new_threads)} new threads on page {page_count}")
             
             page_url = next_page
             
