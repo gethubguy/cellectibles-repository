@@ -32,7 +32,7 @@ This repository archives multiple collectibles sources including forums, auction
 1. **GitHub Actions Scraper** (scripts/) - Automated Net54 scraping
    - Runs weekly via GitHub Actions
    - Uses original Net54 scraper implementation
-   - Stores data in `data/forums/net54/`
+   - Stores data in `data/forums/net54baseball.com/`
 
 2. **Collectibles System** (tools/, configs/, collectibles.py) - Local multi-source scraping
    - Extensible framework for multiple sources
@@ -59,11 +59,9 @@ collectibles-repository/
 │   └── [other sources].yaml
 ├── data/                   # All scraped data
 │   ├── forums/            # Forum data
-│   │   └── net54/         # Net54 specific data
+│   │   └── net54baseball.com/  # Net54 specific data
 │   │       ├── processed/ # Structured JSON data
-│   │       │   ├── forums/
-│   │       │   ├── threads/
-│   │       │   └── posts/
+│   │       │   └── forum_39/  # Data for each forum
 │   │       └── metadata/  # Progress tracking
 │   ├── auctions/          # Future auction data
 │   └── content/           # Future content site data

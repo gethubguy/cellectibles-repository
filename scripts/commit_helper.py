@@ -23,13 +23,13 @@ def commit_data():
     run_command("git config --global user.email 'action@github.com'")
     
     # Add data files
-    success, _, _ = run_command("git add data/forums/net54/processed/")
+    success, _, _ = run_command("git add data/forums/net54baseball.com/processed/")
     if not success:
-        print("No data/forums/net54/processed directory to add")
+        print("No data/forums/net54baseball.com/processed directory to add")
         
-    success, _, _ = run_command("git add data/forums/net54/metadata/")
+    success, _, _ = run_command("git add data/forums/net54baseball.com/metadata/")
     if not success:
-        print("No data/forums/net54/metadata directory to add")
+        print("No data/forums/net54baseball.com/metadata directory to add")
     
     # Check if there are changes to commit
     success, output, _ = run_command("git diff --staged --quiet")
@@ -38,7 +38,7 @@ def commit_data():
         return True
     
     # Get stats for commit message (count thread files, excluding metadata.json)
-    all_files = list(Path("data/forums/net54/processed").rglob("*.json")) if Path("data/forums/net54/processed").exists() else []
+    all_files = list(Path("data/forums/net54baseball.com/processed").rglob("*.json")) if Path("data/forums/net54baseball.com/processed").exists() else []
     thread_files = [f for f in all_files if f.name.startswith("thread_")]
     thread_count = len(thread_files)
     
