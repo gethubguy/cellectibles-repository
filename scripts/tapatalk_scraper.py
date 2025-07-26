@@ -208,6 +208,10 @@ class TapatalkScraper:
                 topic_id = str(topic.get('topic_id'))
                 if not self.storage.is_thread_scraped(forum_id, topic_id):
                     all_topics.append(topic)
+                    
+                    # Stop immediately when we reach the limit
+                    if topic_limit and len(all_topics) >= topic_limit:
+                        break
             
             # Check if we've hit the limit of NEW topics
             if topic_limit and len(all_topics) >= topic_limit:
@@ -218,7 +222,7 @@ class TapatalkScraper:
                 break
                 
             start += batch_size
-            logger.info(f"Fetched {len(all_topics)} topics so far...")
+            logger.info(f"Fetched {len(all_topics)} new topics so far...")
         
         logger.info(f"Total topics to process: {len(all_topics)}")
         
