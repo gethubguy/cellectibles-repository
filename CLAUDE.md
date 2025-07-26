@@ -1,4 +1,4 @@
-# Net54 Baseball Forum Archive Project
+# Collectibles Repository
 
 ## Communication Preferences
 - **ALWAYS respond with yes/no when appropriate & possible. If you need to supplement with context, a Maximum 1-2 sentences is acceptable.**
@@ -18,31 +18,58 @@
 - Binary questions are good - answer yes/no when possible
 
 ## Project Overview
-This project archives the Net54 Baseball forum (https://www.net54baseball.com/), a massive repository of vintage sports card history and knowledge. The goal is to preserve ~300,000 threads and 2.2 million posts locally for future AI analysis and historical preservation.
+This repository archives multiple collectibles sources including forums, auction houses, and content sites. Currently focused on archiving the Net54 Baseball forum (https://www.net54baseball.com/) with ~300,000 threads and 2.2 million posts. The system is designed to expand to other collectibles sources for comprehensive historical preservation and AI analysis.
 
 ## Technical Stack
 - **Language**: Python 3.x
-- **Scraping**: BeautifulSoup4, requests
+- **Scraping**: BeautifulSoup4, requests, xmlrpc (Tapatalk)
 - **Storage**: JSON files with hierarchical structure
-- **Automation**: GitHub Actions (to protect user IP)
-- **Rate Limiting**: 1-2 seconds between requests
+- **Automation**: GitHub Actions (for Net54, protects user IP)
+- **Configuration**: YAML files for each source
+- **Rate Limiting**: Configurable delays per source
+
+## Current Systems
+1. **GitHub Actions Scraper** (scripts/) - Automated Net54 scraping
+   - Runs weekly via GitHub Actions
+   - Uses original Net54 scraper implementation
+   - Stores data in `data/forums/net54/`
+
+2. **Collectibles System** (tools/, configs/, collectibles.py) - Local multi-source scraping
+   - Extensible framework for multiple sources
+   - YAML configuration for each source
+   - Ready for local scraping expansion
 
 ## Directory Structure
 ```
-net54-archive/
-├── scripts/
-│   ├── scraper.py         # Main scraping orchestration
+collectibles-repository/
+├── scripts/                # Original Net54 scraper (GitHub Actions)
+│   ├── scraper.py         # Main Net54 scraping orchestration
 │   ├── parser.py          # HTML parsing and data extraction
 │   ├── storage.py         # Data persistence handlers
+│   ├── tapatalk_scraper.py # Tapatalk API scraper
 │   └── utils.py           # Shared utilities
-├── data/
-│   ├── raw/               # Raw HTML pages (if needed)
-│   ├── processed/         # Structured JSON data
-│   │   ├── forums/        # Forum metadata
-│   │   ├── threads/       # Thread data by ID
-│   │   └── posts/         # Individual posts
-│   └── metadata/          # Site structure, progress tracking
+├── tools/                  # New collectibles framework
+│   └── scrapers/
+│       ├── base/          # Base classes for all scrapers
+│       ├── forums/        # Forum scrapers (Net54 wrapper)
+│       └── auctions/      # Auction site scrapers
+├── configs/                # YAML configs for each source
+│   ├── net54.yaml
+│   ├── heritage.yaml
+│   └── [other sources].yaml
+├── data/                   # All scraped data
+│   ├── forums/            # Forum data
+│   │   └── net54/         # Net54 specific data
+│   │       ├── processed/ # Structured JSON data
+│   │       │   ├── forums/
+│   │       │   ├── threads/
+│   │       │   └── posts/
+│   │       └── metadata/  # Progress tracking
+│   ├── auctions/          # Future auction data
+│   └── content/           # Future content site data
 ├── logs/                  # Scraping logs by date
+├── docs/                  # Documentation
+├── collectibles.py        # CLI for local scraping
 ├── .github/
 │   └── workflows/
 │       └── scrape.yml     # GitHub Actions workflow
@@ -77,6 +104,27 @@ The archived data will enable:
 - Expert knowledge extraction from veteran collectors
 - Pattern recognition in authentication discussions
 - Building a comprehensive knowledge base for card identification
+- Cross-reference pricing between forums and auction results
+- Track provenance and ownership history
+
+## Planned Sources
+- **Forums**: Net54 (active), Blowout Cards, CU, PSA forums
+- **Auctions**: Heritage, REA, Mile High, PWCC
+- **Content**: PSA articles, Beckett guides, vintage card blogs
+- **Grading**: PSA population reports, SGC census data
+
+## Local Scraping Usage
+For sources that can't use GitHub Actions:
+```bash
+# List available archives
+python collectibles.py list
+
+# Scrape a specific source
+python collectibles.py scrape heritage --limit 100
+
+# Show statistics
+python collectibles.py stats heritage
+```
 
 ## CLAUDE.md Update Protocol
 - **Always inform the user** before updating CLAUDE.md
@@ -88,3 +136,4 @@ When referencing specific functions or pieces of code include the pattern `file_
 
 ---
 *Project Start Date: July 2025*
+*Repository Renamed: July 2025 (from net54-archive to collectibles-repository)*

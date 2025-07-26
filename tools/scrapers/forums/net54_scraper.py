@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../../scripts'))
 
 from ..base.base_scraper import BaseScraper
 from scraper import Net54Scraper as LegacyScraper
-from storage_updated import DataStorage
+from storage import DataStorage
 
 class Net54Scraper(BaseScraper):
     """New Net54 scraper that wraps the legacy implementation"""

@@ -32,10 +32,17 @@ commit_data() {
 # Trap to ensure we commit on exit
 cleanup() {
     echo "=== Scraper interrupted, committing final data ==="
+    # Save timeout exit code if scraper is still running
+    if kill -0 $SCRAPER_PID 2>/dev/null; then
+        echo "124" > scraper_exit_code.txt  # 124 = timeout exit code
+    fi
     commit_data
     exit 0
 }
 trap cleanup EXIT INT TERM
+
+# Create exit code file with initial value (will update later)
+echo "1" > scraper_exit_code.txt
 
 # Start the scraper in background
 echo "=== Starting scraper at $(date) ==="
@@ -56,7 +63,7 @@ SCRAPER_EXIT_CODE=$?
 
 echo "=== Scraper finished with exit code $SCRAPER_EXIT_CODE ==="
 
-# Save exit code to file for workflow to check
+# Update exit code file with actual exit code
 echo $SCRAPER_EXIT_CODE > scraper_exit_code.txt
 
 # Always exit 0 to allow commits, but preserve actual exit code in file
