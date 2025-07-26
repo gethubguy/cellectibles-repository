@@ -57,7 +57,7 @@ jobs:
     
     - name: Create directories
       run: |
-        mkdir -p data/forums/net54baseball.com/{processed,metadata}
+        mkdir -p data/forums/net54baseball.com
         mkdir -p logs
     
     - name: Download previous data artifact
@@ -106,8 +106,7 @@ jobs:
       run: |
         git config --global user.name 'GitHub Action'
         git config --global user.email 'action@github.com'
-        git add data/forums/net54baseball.com/processed/
-        git add data/forums/net54baseball.com/metadata/
+        git add data/forums/net54baseball.com/
         git diff --staged --quiet || git commit -m "Add scraped data from forum ${{ github.event.inputs.forum_id }} [skip ci]"
         git push || echo "No new data to push"
     

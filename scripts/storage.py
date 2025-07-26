@@ -9,17 +9,12 @@ logger = setup_logging('storage')
 class DataStorage:
     def __init__(self, base_dir='./data/forums/net54baseball.com'):
         self.base_dir = Path(base_dir)
-        self.processed_dir = self.base_dir / 'processed'
-        self.metadata_dir = self.base_dir / 'metadata'
         
-        # Create base directories
-        self.processed_dir.mkdir(parents=True, exist_ok=True)
-        self.metadata_dir.mkdir(parents=True, exist_ok=True)
+        # Create base directory
+        self.base_dir.mkdir(parents=True, exist_ok=True)
         
-        # Forum-specific directories created on demand
-        
-        # Load or create progress tracking
-        self.progress_file = self.metadata_dir / 'progress.json'
+        # Progress tracking at site level
+        self.progress_file = self.base_dir / 'progress.json'
         self.progress = self.load_progress()
     
     def load_progress(self):
@@ -44,7 +39,7 @@ class DataStorage:
         """Save forum metadata."""
         forum_id = str(forum_data['id'])
         # Save forum metadata in the forum directory
-        forum_dir = self.processed_dir / f'forum_{forum_id}'
+        forum_dir = self.base_dir / f'forum_{forum_id}'
         forum_dir.mkdir(parents=True, exist_ok=True)
         filename = forum_dir / 'metadata.json'
         
@@ -67,7 +62,7 @@ class DataStorage:
         forum_id = str(thread_data['forum_id'])
         
         # Save directly in forum directory
-        forum_dir = self.processed_dir / f'forum_{forum_id}'
+        forum_dir = self.base_dir / f'forum_{forum_id}'
         forum_dir.mkdir(parents=True, exist_ok=True)
         
         filename = forum_dir / f'thread_{thread_id}.json'
@@ -97,7 +92,7 @@ class DataStorage:
         forum_id = str(forum_id)
         
         # Load existing thread file
-        forum_dir = self.processed_dir / f'forum_{forum_id}'
+        forum_dir = self.base_dir / f'forum_{forum_id}'
         filename = forum_dir / f'thread_{thread_id}.json'
         
         if filename.exists():
