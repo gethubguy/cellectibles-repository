@@ -203,11 +203,14 @@ class TapatalkScraper:
             if not topics:
                 break
                 
-            all_topics.extend(topics)
+            # Only add topics that haven't been scraped yet
+            for topic in topics:
+                topic_id = str(topic.get('topic_id'))
+                if not self.storage.is_thread_scraped(forum_id, topic_id):
+                    all_topics.append(topic)
             
-            # Check if we've hit the limit
+            # Check if we've hit the limit of NEW topics
             if topic_limit and len(all_topics) >= topic_limit:
-                all_topics = all_topics[:topic_limit]
                 break
             
             # If we got less than batch_size, we're at the end
