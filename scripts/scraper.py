@@ -54,14 +54,13 @@ class Net54Scraper:
             response = fetch_page(page_url, self.session)
             threads, next_page = self.parser.parse_forum_page(response.text, forum_id)
             
-            all_threads.extend(threads)
-            
             # Save threads (skip already scraped ones)
             new_threads = []
             for thread in threads:
                 if not self.storage.is_thread_scraped(forum_id, thread['id']):
                     self.storage.save_thread(thread)
                     new_threads.append(thread)
+                    all_threads.append(thread)  # Only add NEW threads to all_threads
                 else:
                     logger.debug(f"Thread {thread['id']} already scraped, skipping...")
             
@@ -72,7 +71,7 @@ class Net54Scraper:
             
             page_url = next_page
             
-            # Check limit
+            # Check limit (only count NEW threads)
             if limit and len(all_threads) >= limit:
                 logger.info(f"Reached thread limit of {limit}")
                 break
