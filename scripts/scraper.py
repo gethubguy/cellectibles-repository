@@ -131,12 +131,12 @@ class Net54Scraper:
                 logger.info(f"Expected threads: {forum['thread_count']}")
                 logger.info(f"{'='*60}\n")
                 
-                # Get threads
+                # Get NEW threads only
                 threads = self.scrape_forum_threads(forum['id'], limit=thread_limit)
                 
                 if threads:
-                    # Process each thread
-                    for i, thread in enumerate(tqdm(threads, desc="Scraping threads")):
+                    # Process each NEW thread for posts
+                    for i, thread in enumerate(tqdm(threads, desc="Scraping posts from threads")):
                         try:
                             self.scrape_thread_posts(thread['id'], forum['id'])
                         except Exception as e:
