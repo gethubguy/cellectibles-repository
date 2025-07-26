@@ -262,7 +262,7 @@ class TapatalkScraper:
             
             # Save posts
             if posts:
-                self.storage.save_posts(topic['topic_id'], posts)
+                self.storage.save_posts(topic['topic_id'], posts, forum_id)
         
         stats = self.storage.get_stats()
         logger.info(f"Scraping complete. Total threads: {stats['threads_scraped']}")

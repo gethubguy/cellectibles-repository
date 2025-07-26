@@ -12,14 +12,11 @@ class DataStorage:
         self.processed_dir = self.base_dir / 'processed'
         self.metadata_dir = self.base_dir / 'metadata'
         
-        # Create directories
-        for dir_path in [
-            self.processed_dir / 'forums',
-            self.processed_dir / 'threads',
-            self.processed_dir / 'posts',
-            self.metadata_dir
-        ]:
-            dir_path.mkdir(parents=True, exist_ok=True)
+        # Create base directories
+        self.processed_dir.mkdir(parents=True, exist_ok=True)
+        self.metadata_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Forum-specific directories created on demand
         
         # Load or create progress tracking
         self.progress_file = self.metadata_dir / 'progress.json'
@@ -46,7 +43,10 @@ class DataStorage:
     def save_forum(self, forum_data):
         """Save forum metadata."""
         forum_id = str(forum_data['id'])
-        filename = self.processed_dir / 'forums' / f'forum_{forum_id}.json'
+        # Save forum metadata in the forum directory
+        forum_dir = self.processed_dir / f'forum_{forum_id}'
+        forum_dir.mkdir(parents=True, exist_ok=True)
+        filename = forum_dir / 'metadata.json'
         
         with open(filename, 'w') as f:
             json.dump(forum_data, f, indent=2)
@@ -62,15 +62,18 @@ class DataStorage:
         logger.info(f"Saved forum: {forum_data['name']} (ID: {forum_id})")
     
     def save_thread(self, thread_data):
-        """Save thread data."""
+        """Save thread metadata only - posts will be added later."""
         thread_id = str(thread_data['id'])
         forum_id = str(thread_data['forum_id'])
         
-        # Organize threads by forum
-        forum_dir = self.processed_dir / 'threads' / f'forum_{forum_id}'
-        forum_dir.mkdir(exist_ok=True)
+        # Save directly in forum directory
+        forum_dir = self.processed_dir / f'forum_{forum_id}'
+        forum_dir.mkdir(parents=True, exist_ok=True)
         
         filename = forum_dir / f'thread_{thread_id}.json'
+        
+        # Initialize with thread metadata and empty posts array
+        thread_data['posts'] = []
         
         with open(filename, 'w') as f:
             json.dump(thread_data, f, indent=2)
@@ -88,17 +91,28 @@ class DataStorage:
         
         logger.info(f"Saved thread: {thread_data['title'][:50]}... (ID: {thread_id})")
     
-    def save_posts(self, thread_id, posts):
-        """Save all posts for a thread."""
+    def save_posts(self, thread_id, posts, forum_id):
+        """Add posts to existing thread file."""
         thread_id = str(thread_id)
+        forum_id = str(forum_id)
         
-        # Save posts as a single file per thread
-        filename = self.processed_dir / 'posts' / f'thread_{thread_id}_posts.json'
+        # Load existing thread file
+        forum_dir = self.processed_dir / f'forum_{forum_id}'
+        filename = forum_dir / f'thread_{thread_id}.json'
         
-        with open(filename, 'w') as f:
-            json.dump(posts, f, indent=2)
-        
-        logger.info(f"Saved {len(posts)} posts for thread {thread_id}")
+        if filename.exists():
+            with open(filename, 'r') as f:
+                thread_data = json.load(f)
+            
+            # Add posts to thread data
+            thread_data['posts'] = posts
+            
+            with open(filename, 'w') as f:
+                json.dump(thread_data, f, indent=2)
+            
+            logger.info(f"Added {len(posts)} posts to thread {thread_id}")
+        else:
+            logger.error(f"Thread file not found for {thread_id} - save thread first!")
     
     def is_forum_scraped(self, forum_id):
         """Check if forum has already been scraped."""

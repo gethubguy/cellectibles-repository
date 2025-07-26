@@ -36,9 +36,10 @@ class Net54Scraper:
     
     def scrape_forum_threads(self, forum_id, limit=None):
         """Scrape all threads from a specific forum."""
-        if self.storage.is_forum_scraped(forum_id):
-            logger.info(f"Forum {forum_id} already scraped, skipping...")
-            return
+        # Don't skip forums - continue where we left off
+        # if self.storage.is_forum_scraped(forum_id):
+        #     logger.info(f"Forum {forum_id} already scraped, skipping...")
+        #     return
         
         logger.info(f"Scraping threads from forum {forum_id}...")
         all_threads = []
@@ -55,9 +56,19 @@ class Net54Scraper:
             
             all_threads.extend(threads)
             
-            # Save threads
+            # Save threads (skip already scraped ones)
+            new_threads = []
             for thread in threads:
-                self.storage.save_thread(thread)
+                if not self.storage.is_thread_scraped(forum_id, thread['id']):
+                    self.storage.save_thread(thread)
+                    new_threads.append(thread)
+                else:
+                    logger.debug(f"Thread {thread['id']} already scraped, skipping...")
+            
+            # If we found no new threads on this page, we're done
+            if not new_threads and threads:
+                logger.info(f"No new threads found on page {page_count}, stopping...")
+                break
             
             page_url = next_page
             
@@ -92,7 +103,7 @@ class Net54Scraper:
             page_url = next_page
         
         # Save all posts for this thread
-        self.storage.save_posts(thread_id, all_posts)
+        self.storage.save_posts(thread_id, all_posts, forum_id)
         
         logger.info(f"Scraped {len(all_posts)} posts from thread {thread_id}")
         return all_posts

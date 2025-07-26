@@ -57,7 +57,7 @@ jobs:
     
     - name: Create directories
       run: |
-        mkdir -p data/forums/net54/{raw,processed/{forums,threads,posts},metadata}
+        mkdir -p data/forums/net54/{processed,metadata}
         mkdir -p logs
     
     - name: Download previous data artifact

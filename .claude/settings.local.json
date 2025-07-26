@@ -44,7 +44,10 @@
       "Bash(sudo mv:*)",
       "Bash(cp:*)",
       "Bash(diff:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git checkout:*)",
+      "Bash(true)"
     ],
     "deny": []
   }

@@ -23,13 +23,13 @@ def commit_data():
     run_command("git config --global user.email 'action@github.com'")
     
     # Add data files
-    success, _, _ = run_command("git add data/processed/")
+    success, _, _ = run_command("git add data/forums/net54/processed/")
     if not success:
-        print("No data/processed directory to add")
+        print("No data/forums/net54/processed directory to add")
         
-    success, _, _ = run_command("git add data/metadata/")
+    success, _, _ = run_command("git add data/forums/net54/metadata/")
     if not success:
-        print("No data/metadata directory to add")
+        print("No data/forums/net54/metadata directory to add")
     
     # Check if there are changes to commit
     success, output, _ = run_command("git diff --staged --quiet")
@@ -37,13 +37,14 @@ def commit_data():
         print("No changes to commit")
         return True
     
-    # Get stats for commit message
-    thread_count = len(list(Path("data/processed/threads").rglob("*.json"))) if Path("data/processed/threads").exists() else 0
-    post_count = len(list(Path("data/processed/posts").rglob("*.json"))) if Path("data/processed/posts").exists() else 0
+    # Get stats for commit message (count thread files, excluding metadata.json)
+    all_files = list(Path("data/forums/net54/processed").rglob("*.json")) if Path("data/forums/net54/processed").exists() else []
+    thread_files = [f for f in all_files if f.name.startswith("thread_")]
+    thread_count = len(thread_files)
     
     # Commit with descriptive message
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
-    commit_msg = f"Add scraped data: {thread_count} threads, {post_count} posts ({timestamp}) [skip ci]"
+    commit_msg = f"Add scraped data: {thread_count} threads ({timestamp}) [skip ci]"
     
     success, output, error = run_command(f'git commit -m "{commit_msg}"')
     if success:
