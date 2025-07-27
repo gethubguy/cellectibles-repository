@@ -2,7 +2,7 @@
   "forums": {
     "39": {
       "name": "Forum 39",
-      "scraped_at": "2025-07-27T20:08:54.790491",
+      "scraped_at": "2025-07-27T22:27:44.104564",
       "thread_count": 0
     }
   },
@@ -78442,8 +78442,13 @@
         "title": "SOLD: T206 Dahlen Brooklyn variation SGC A Reduced 6/2",
         "scraped_at": "2025-07-27T21:06:39.798646",
         "post_count": 0
+      },
+      "363361": {
+        "title": "Old Cardboard Website",
+        "scraped_at": "2025-07-27T22:55:28.428394",
+        "post_count": 0
       }
     }
   },
-  "last_update": "2025-07-27T21:06:39.798655"
+  "last_update": "2025-07-27T22:55:28.428403"
 }
