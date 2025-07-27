@@ -1,0 +1,52 @@
+{
+  "id": "229531",
+  "forum_id": "39",
+  "title": "B/S/T PayPal FF shipping question",
+  "author": "obcbeatle",
+  "reply_count": 4,
+  "view_count": 410,
+  "created_date": null,
+  "last_reply": "20161006T14:36:19-06:00",
+  "posts": [
+    {
+      "post_id": "1591266",
+      "post_title": "B/S/T PayPal FF shipping question",
+      "post_author_name": "obcbeatle",
+      "post_content": "Sorry if this is not the proper place to post this question... but I thought the B/S/T area may be for general questions about how to ship packages online when selling through B/S/T?\r\n\r\nFor all those that sell cards via the Net54 B/S/T area using PayPal Family & Friends ... are you able to print USPS shipping labels from PayPal after being paid... with tracking? I've used PayPal for shipping ... but only through eBay. And it looks like the USPS Click & Ship program doesn't handle First Class mail (or do you always use Priority Mail anyway?). Any help appreciated. Thank you.\r\n\r\nPS: I did try searching past threads and came up blank ... but feel free to point me to a thread about this topic if there is one.",
+      "post_time": "20161005T14:33:09-06:00",
+      "timestamp": "1475699589"
+    },
+    {
+      "post_id": "1591293",
+      "post_title": "",
+      "post_author_name": "slinger23",
+      "post_content": "[quote name=\"obcbeatle\" post=1591266]Sorry if this is not the proper place to post this question... but I thought the B/S/T area may be for general questions about how to ship packages online when selling through B/S/T?\r\n\r\nFor all those that sell cards via the Net54 B/S/T area using PayPal Family & Friends ... are you able to print USPS shipping labels from PayPal after being paid... with tracking? I've used PayPal for shipping ... but only through eBay. And it looks like the USPS Click & Ship program doesn't handle First Class mail (or do you always use Priority Mail anyway?). Any help appreciated. Thank you.\r\n\r\nPS: I did try searching past threads and came up blank ... but feel free to point me to a thread about this topic if there is one.[/QUOTE]\r\n\r\nThere might be an easier way than what I use, but I always log into Paypal and go to the Multi-Order Shipping and you can manually input an address and you can send first class that way. I do this when I fulfill sportlots.com orders and random shipments that I need to make. Hope this helps. But if anyone know directly about the Friends/Family, please chime in.",
+      "post_time": "20161005T16:05:13-06:00",
+      "timestamp": "1475705113"
+    },
+    {
+      "post_id": "1591298",
+      "post_title": "",
+      "post_author_name": "cammb",
+      "post_content": "I walk to the post office and get my shipping label and tracking.",
+      "post_time": "20161005T16:19:40-06:00",
+      "timestamp": "1475705980"
+    },
+    {
+      "post_id": "1591299",
+      "post_title": "",
+      "post_author_name": "gregr2",
+      "post_content": "Use this link to USPS Paypal, $2.60 shipping just like eBay with tracking.\r\n\r\n[url]https://www.paypal.com/signin/?returnUri=https%3a//www.paypal.com/us/cgi-bin/webscr&state=%3fcmd%3d_ship-now[/url]",
+      "post_time": "20161005T16:21:58-06:00",
+      "timestamp": "1475706118"
+    },
+    {
+      "post_id": "1591575",
+      "post_title": "Thank you for the replies!",
+      "post_author_name": "obcbeatle",
+      "post_content": "Thanks for all the replies! Andy I just checked out Multi-Order Shipping in PayPal. I had never even seen that. I have to poke around a lot more in PayPal than I used to. Their UI right now is terrible IMO. Anyway ... I guess if I can't figure it out when I'm ready to ship via FF then I'll do like cammb and walk to my PO to ship/track :-) Thanks again for the feedback!",
+      "post_time": "20161006T14:36:19-06:00",
+      "timestamp": "1475786179"
+    }
+  ]
+}
