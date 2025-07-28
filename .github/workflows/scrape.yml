@@ -30,6 +30,7 @@ jobs:
   scrape:
     runs-on: ubuntu-latest
     timeout-minutes: 360  # 6 hours max
+    continue-on-error: true  # Don't show as failed on timeout
     permissions:
       contents: write  # Allow pushing commits
     
@@ -60,12 +61,7 @@ jobs:
         mkdir -p data/forums/net54baseball.com
         mkdir -p logs
     
-    - name: Download previous data artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: scraped-data
-        path: data/forums/net54baseball.com/
-      continue-on-error: true
+    # Data is stored in git repository, no need for artifacts
     
     - name: Run scraper
       env:
@@ -95,7 +91,11 @@ jobs:
           EXIT_CODE=$(cat scraper_exit_code.txt)
           echo "Scraper exit code: $EXIT_CODE"
           if [ "$EXIT_CODE" != "0" ]; then
-            echo "::warning::Scraper exited with error code $EXIT_CODE but data was preserved"
+            if [ "$EXIT_CODE" = "124" ]; then
+              echo "::notice::Scraper reached 6-hour time limit - this is normal for large scraping jobs. Data was saved."
+            else
+              echo "::warning::Scraper exited with error code $EXIT_CODE but data was preserved"
+            fi
           fi
         else
           echo "::warning::Could not find scraper exit code file"
@@ -110,21 +110,9 @@ jobs:
         git diff --staged --quiet || git commit -m "Add scraped data from forum ${{ github.event.inputs.forum_id }} [skip ci]"
         git push || echo "No new data to push"
     
-    - name: Upload scraped data artifact
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: scraped-data
-        path: data/forums/net54baseball.com/
-        retention-days: 30
+    # Scraped data is committed to git, no artifact needed
     
-    - name: Upload logs
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: scraping-logs
-        path: logs/
-        retention-days: 30
+    # Logs can be viewed in GitHub Actions console
     
     - name: Create summary
       if: always()
