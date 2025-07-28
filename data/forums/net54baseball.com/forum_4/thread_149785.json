@@ -1,0 +1,148 @@
+{
+  "id": "149785",
+  "forum_id": "4",
+  "title": "Board PM / email issues??",
+  "author": "Leon",
+  "reply_count": 16,
+  "view_count": 903,
+  "created_date": null,
+  "last_reply": "20120415T20:18:05-06:00",
+  "posts": [
+    {
+      "post_id": "982367",
+      "post_title": "Board PM / email issues??",
+      "post_author_name": "Leon",
+      "post_content": "Hey Folks\nI have had 2 messages in the last day concerning some email and PM issues. Folks aren't getting emails when they get PMs or aren't getting emails through the system at all? As everyone knows we have been in the process of migrating to a new cloud service. That really shouldn't have caused any issues though. Also, as I have given folks more space in PMs, emails and jpegs maybe the forum is hitting some kind of size limit in data being stored, which could potentially cause some issues. These are just guesses though and I am not aware of us changing any settings otherwise. Are other folks having these kind of problems too? thanks",
+      "post_time": "20120408T07:04:00-06:00",
+      "timestamp": "1333890240"
+    },
+    {
+      "post_id": "982368",
+      "post_title": "Email lost in space?",
+      "post_author_name": "frankbmd",
+      "post_content": "Leon, \n\nHave sent 5-6 different notes via Email in the system to posters on My Mailman's Baseball thread.  No images attached.  I have received no response, not that any was requested, but have been surprised that none have been acknowledged.  Could they be lost in the clouds?\n\nFrank",
+      "post_time": "20120408T08:01:18-06:00",
+      "timestamp": "1333893678"
+    },
+    {
+      "post_id": "982369",
+      "post_title": "",
+      "post_author_name": "yanksfan09",
+      "post_content": "I think this happened with me. About a week ago I sent an email though this site for a BST item and I guess it never went through. I later posted a follow up on BST that I had previously emailed him and he informed me he never got an email. We've since had contact and all is fine, this was the first time someone hadn't responded to an email I've sent through the site.",
+      "post_time": "20120408T08:33:45-06:00",
+      "timestamp": "1333895625"
+    },
+    {
+      "post_id": "982370",
+      "post_title": "",
+      "post_author_name": "christopher.herman",
+      "post_content": "Issues here to:\nPM notifications which are sent to my email began going to my Spam folder all of a sudden. Now they are not showing up at all.",
+      "post_time": "20120408T08:39:31-06:00",
+      "timestamp": "1333895971"
+    },
+    {
+      "post_id": "982371",
+      "post_title": "",
+      "post_author_name": "pariah1107",
+      "post_content": "Christopher, Sorry to here about the trouble. In case you did not receive my PM... Card was sent Friday to your address. PM or email me back when you receive it. Hope this problem clears up soon. Ty",
+      "post_time": "20120408T09:03:27-06:00",
+      "timestamp": "1333897407"
+    },
+    {
+      "post_id": "982372",
+      "post_title": "",
+      "post_author_name": "rc4157",
+      "post_content": "As I noted in another thread over on the BST, I had an email that never went through on an offer for a card, not a big deal but I'm sure it could be for some higher dollar cards or high sought after cards.\nRC",
+      "post_time": "20120408T09:36:28-06:00",
+      "timestamp": "1333899388"
+    },
+    {
+      "post_id": "982373",
+      "post_title": "",
+      "post_author_name": "atx840",
+      "post_content": "Leon, it could be how the SMTP(mail) is relayed, if you are on the new servers they might be blocking outbound connections, if you haven't moved yet then it might have been disabled in the last forum update.",
+      "post_time": "20120408T09:52:08-06:00",
+      "timestamp": "1333900328"
+    },
+    {
+      "post_id": "982374",
+      "post_title": "for the moment",
+      "post_author_name": "Leon",
+      "post_content": "I have checked everything on the back end of our s/w and don't see any issues. I sent myself an email through our system, a little while ago, and it never came through. It would be wise to only use PMs or get each others private emails and send them that way as of right now. Again, my apologies for issues. There just isn't anything I am seeing that would prevent the emails from going through. I wish there was so I could fix it. I guess too there is a small chance it is the hosting company playing with the settings as they try to convert us to our own server. The email messages from the hosting company are perplexing to Brian and I as we go through that process. Maybe they have changed something and it will be fixed when the migration is done? Peter Spaeth can testify to a few emails that have been sent as he was inadvertently copied. My messages to them haven't been very nice. best regards\n\nChirs- I was typing my message as you posted yours....and was in the message for several minutes.....We are in agreement.\n\nbecause of the importance of this topic I am \"sticking\" this thread for now.....",
+      "post_time": "20120408T09:59:28-06:00",
+      "timestamp": "1333900768"
+    },
+    {
+      "post_id": "982375",
+      "post_title": "",
+      "post_author_name": "milkit1",
+      "post_content": "ouch, this might be why i havent heard back regarding the wide variety of cards thread?",
+      "post_time": "20120408T10:27:12-06:00",
+      "timestamp": "1333902432"
+    },
+    {
+      "post_id": "982376",
+      "post_title": "",
+      "post_author_name": "Brian Van Horn",
+      "post_content": "Yes, with the most recent example being yesterday. The message was on Net54, but never made it to my e-mail.",
+      "post_time": "20120408T10:48:39-06:00",
+      "timestamp": "1333903719"
+    },
+    {
+      "post_id": "982377",
+      "post_title": "",
+      "post_author_name": "sycks22",
+      "post_content": "I've had pms not being sent via e-mail to me.  I thought it was just me.",
+      "post_time": "20120408T11:12:41-06:00",
+      "timestamp": "1333905161"
+    },
+    {
+      "post_id": "982378",
+      "post_title": "",
+      "post_author_name": "Leon",
+      "post_content": "[quote name=\"sycks22\" post=982174]I've had pms not being sent via e-mail to me.  I thought it was just me.[/QUOTE]\n\nMy PMs are working as of a minute ago. I don't think regular PMs are an issue right now.",
+      "post_time": "20120408T11:19:57-06:00",
+      "timestamp": "1333905597"
+    },
+    {
+      "post_id": "982379",
+      "post_title": "",
+      "post_author_name": "sycks22",
+      "post_content": "[quote name=\"Leon\" post=982175]My PMs are working as of a minute ago. I don't think regular PMs are an issue right now.[/QUOTE]\n\nMy pms are working.  I meant I'm not getting e-mails that I have received pms like the other guy in this thread.  I know it'll work out.  Happy Easter Everyone.",
+      "post_time": "20120408T11:29:52-06:00",
+      "timestamp": "1333906192"
+    },
+    {
+      "post_id": "982380",
+      "post_title": "",
+      "post_author_name": "gnaz01",
+      "post_content": "[quote name=\"sycks22\" post=982178]My pms are working.  I meant I'm not getting e-mails that I have received pms like the other guy in this thread.  I know it'll work out.  Happy Easter Everyone.[/QUOTE]\n\nExactly this issue Leon.  My PM's are in my folder, but I used to always get an email whenever I had a PM, not lately though (maybe the last week or so).",
+      "post_time": "20120408T11:34:41-06:00",
+      "timestamp": "1333906481"
+    },
+    {
+      "post_id": "982381",
+      "post_title": "",
+      "post_author_name": "Leon",
+      "post_content": "[quote name=\"gnaz01\" post=982181]Exactly this issue Leon.  My PM's are in my folder, but I used to always get an email whenever I had a PM, not lately though (maybe the last week or so).[/QUOTE]\n\nThanks Greg....I think it is going to be another week or two, from the way it's going with the hosting company, before we get the server stuff settled. That is IF they don't boot me as a customer :).  The more I think about it the more I am thinking it could be as Chris said above. What I will probably do is leave this sticky'ed for a few days and then sticky a message on the BST pages, since that is where most communications are done. I guess these are growing pains but they suck.....",
+      "post_time": "20120408T11:40:16-06:00",
+      "timestamp": "1333906816"
+    },
+    {
+      "post_id": "984331",
+      "post_title": "",
+      "post_author_name": "Sterling Sports Auctions",
+      "post_content": "I just received an email, any idea where the rest went?\n\nLee",
+      "post_time": "20120415T19:52:16-06:00",
+      "timestamp": "1334541136"
+    },
+    {
+      "post_id": "984338",
+      "post_title": "",
+      "post_author_name": "Leon",
+      "post_content": "[quote name=\"bowlingshoegiverouterguy\" post=984331]I just received an email, any idea where the rest went?\n\nLee[/QUOTE]\n\nNo. Sorry about that. LL",
+      "post_time": "20120415T20:18:05-06:00",
+      "timestamp": "1334542685"
+    }
+  ]
+}
