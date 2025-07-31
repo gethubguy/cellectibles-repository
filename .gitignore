@@ -15,8 +15,7 @@ logs/
 data/raw/
 data/sample/
 
-# Forum data (too many files for git)
-data/forums/
+# Forum data is now tracked in git for GitHub Actions
 
 # New structure - raw data
 archives/*/*/data/raw/
