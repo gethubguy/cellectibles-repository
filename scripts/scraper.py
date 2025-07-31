@@ -175,6 +175,7 @@ def main():
         print(f"Forums scraped: {stats['forums_scraped']}")
         print(f"Threads scraped: {stats['threads_scraped']}")
         print(f"Last update: {stats['last_update']}")
+        sys.exit(0)  # Exit successfully after showing stats
     else:
         scraper.scrape_entire_forum(
             forum_id=args.forum,

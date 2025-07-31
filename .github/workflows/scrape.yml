@@ -82,7 +82,7 @@ jobs:
     - name: Show scraping stats
       if: always()
       run: |
-        python scripts/scraper.py --stats
+        python scripts/scraper.py --stats || echo "Could not retrieve stats"
     
     - name: Check scraper exit status
       if: always()
@@ -119,4 +119,4 @@ jobs:
       run: |
         echo "## Scraping Summary" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        python scripts/scraper.py --stats >> $GITHUB_STEP_SUMMARY
+        python scripts/scraper.py --stats >> $GITHUB_STEP_SUMMARY || echo "Could not generate stats" >> $GITHUB_STEP_SUMMARY
