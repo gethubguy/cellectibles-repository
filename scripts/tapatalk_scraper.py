@@ -74,11 +74,25 @@ class TapatalkScraper:
         if isinstance(value, xmlrpc.client.Binary):
             # Handle XML-RPC Binary objects
             return value.data.decode('utf-8', errors='ignore')
-        elif isinstance(value, dict) and 'base64' in str(value):
-            # Handle base64 encoded values
-            return base64.b64decode(value).decode('utf-8', errors='ignore')
         elif isinstance(value, bytes):
+            # Try base64 decode first, then regular decode
+            try:
+                decoded = base64.b64decode(value).decode('utf-8', errors='ignore')
+                # Simple check if decode worked (should have readable text)
+                if decoded and not all(ord(c) < 32 or ord(c) > 126 for c in decoded[:10]):
+                    return decoded
+            except:
+                pass
+            # Fall back to regular decode
             return value.decode('utf-8', errors='ignore')
+        elif isinstance(value, str) and value:
+            # Try base64 decode for strings too
+            try:
+                decoded = base64.b64decode(value).decode('utf-8', errors='ignore')
+                if decoded and not all(ord(c) < 32 or ord(c) > 126 for c in decoded[:10]):
+                    return decoded
+            except:
+                pass
         return value
     
     def parse_topic_list(self, response):
@@ -146,7 +160,9 @@ class TapatalkScraper:
             # Check for error response
             if isinstance(response, dict) and response.get('result') == False:
                 error_msg = self.decode_base64_field(response.get('result_text', ''))
-                logger.error(f"API error: {error_msg}")
+                logger.error(f"API error for forum {forum_id}: {error_msg}")
+                if 'permission' in error_msg.lower() or 'access' in error_msg.lower():
+                    logger.error(f"Forum {forum_id} appears to have access restrictions")
                 return []
             
             topics = self.parse_topic_list(response)
@@ -185,13 +201,26 @@ class TapatalkScraper:
         """Scrape a complete forum"""
         logger.info(f"Starting scrape of forum {forum_id}")
         
-        # Save forum metadata
-        forum_data = {
-            'id': str(forum_id),
-            'name': f'Forum {forum_id}',  # We'll update this from topic data
-            'scraped_at': datetime.now().isoformat()
-        }
-        self.storage.save_forum(forum_data)
+        try:
+            # Test if we can access this forum
+            test_topics = self.get_forum_topics(forum_id, 0, 1)
+            if not test_topics:
+                logger.error(f"Forum {forum_id} appears to be inaccessible or empty via Tapatalk API")
+                logger.error("This forum may require HTML scraping instead")
+                sys.exit(1)
+            
+            # Save forum metadata
+            forum_data = {
+                'id': str(forum_id),
+                'name': f'Forum {forum_id}',  # We'll update this from topic data
+                'scraped_at': datetime.now().isoformat()
+            }
+            self.storage.save_forum(forum_data)
+        except Exception as e:
+            logger.error(f"Failed to access forum {forum_id}: {e}")
+            logger.error(f"Error type: {type(e).__name__}")
+            logger.error("This forum may not be accessible via Tapatalk API")
+            sys.exit(1)
         
         # Get topics in batches
         all_topics = []
