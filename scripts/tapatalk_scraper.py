@@ -201,26 +201,13 @@ class TapatalkScraper:
         """Scrape a complete forum"""
         logger.info(f"Starting scrape of forum {forum_id}")
         
-        try:
-            # Test if we can access this forum
-            test_topics = self.get_forum_topics(forum_id, 0, 1)
-            if not test_topics:
-                logger.error(f"Forum {forum_id} appears to be inaccessible or empty via Tapatalk API")
-                logger.error("This forum may require HTML scraping instead")
-                sys.exit(1)
-            
-            # Save forum metadata
-            forum_data = {
-                'id': str(forum_id),
-                'name': f'Forum {forum_id}',  # We'll update this from topic data
-                'scraped_at': datetime.now().isoformat()
-            }
-            self.storage.save_forum(forum_data)
-        except Exception as e:
-            logger.error(f"Failed to access forum {forum_id}: {e}")
-            logger.error(f"Error type: {type(e).__name__}")
-            logger.error("This forum may not be accessible via Tapatalk API")
-            sys.exit(1)
+        # Save forum metadata
+        forum_data = {
+            'id': str(forum_id),
+            'name': f'Forum {forum_id}',  # We'll update this from topic data
+            'scraped_at': datetime.now().isoformat()
+        }
+        self.storage.save_forum(forum_data)
         
         # Get topics in batches
         all_topics = []
@@ -254,6 +241,14 @@ class TapatalkScraper:
             logger.info(f"Fetched {len(all_topics)} new topics so far...")
         
         logger.info(f"Total topics to process: {len(all_topics)}")
+        
+        if not all_topics:
+            logger.warning(f"No new topics found in forum {forum_id}")
+            logger.info("This could mean:")
+            logger.info("1. All topics have already been scraped")
+            logger.info("2. The forum is empty")
+            logger.info("3. There's an API access issue")
+            return
         
         # Process each topic
         for i, topic in enumerate(all_topics):
