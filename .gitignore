@@ -15,6 +15,9 @@ logs/
 data/raw/
 data/sample/
 
+# Forum data (too many files for git)
+data/forums/
+
 # New structure - raw data
 archives/*/*/data/raw/
 
